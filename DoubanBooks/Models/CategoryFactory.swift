@@ -50,7 +50,7 @@ final class CategoryFactory {
         }
     }
     //接收图书分类
-    func getBooksCountOfCategory(category id: UUID) -> Int? {
+    func getBooksCountOf(category id: UUID) -> Int? {
         do {
             return try BookFactory.getInstance(app!).getBooksOF(category: id).count
         } catch {
@@ -63,7 +63,7 @@ final class CategoryFactory {
     }
     //删除类别
     func removeCategory(category: VMCategory) throws -> (Bool,String?) {
-        if let count = getBooksCountOfCategory(category: category.id){
+        if let count = getBooksCountOf(category: category.id){
             if count > 0 {
                 return (false,"存在该类别图书，不能删除")
             }
