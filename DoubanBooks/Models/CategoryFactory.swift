@@ -79,7 +79,7 @@ final class CategoryFactory {
             return (false, error.localizedDescription)
         }
     }
-    //更新书籍
+    //更新类别
     func updateCategory(category: VMCategory) throws -> (Bool, String?) {
         do {
             if try repository.isEntityExists([VMCategory.colName], keyword: category.name!){
