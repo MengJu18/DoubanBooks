@@ -17,6 +17,9 @@ class CategoriesController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let a = VMCategory()
+        a.name = "1"
+        categories?.append(a)
         do {
             categories = try factory.getAllCategories()
         } catch DataError.readCollectionError(let info) {

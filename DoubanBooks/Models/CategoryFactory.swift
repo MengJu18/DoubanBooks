@@ -93,6 +93,27 @@ final class CategoryFactory {
             return (false, error.localizedDescription)
         }
     }
+    private static let plistName = "CategoryTimeList"
+    static func updateEditTime(id: UUID){
+        let path = Bundle.main.path(forResource: plistName, ofType: "plist")
+        let dic = NSMutableDictionary(contentsOfFile: path!)
+        dic?.setObject(Date.dateNowAsString(pattern: "yyyy-MM-dd HH:mm"), forKey: id.uuidString as NSCopying)
+        dic?.write(toFile: path!, atomically: true)
+    }
+    static func getEditTimeFeomPlist(id: UUID) -> String {
+        let path = Bundle.main.path(forResource: plistName, ofType: "plist")
+        let dic = NSMutableDictionary(contentsOfFile: path!)
+        if let time = dic?[id.uuidString] as? String {
+            return time
+        }
+        return Date.dateNowAsString(pattern: "yyyy-MM-dd HH:mm")
+    }
+    static func removeEditTime(id: UUID){
+        let path = Bundle.main.path(forResource: plistName, ofType: "plist")
+        let dic = NSMutableDictionary(contentsOfFile: path!)
+        dic?.removeObject(forKey: id.uuidString)
+        dic?.write(toFile: path!, atomically: true)
+    }
 }
 //扩展调度队列
 extension DispatchQueue {
