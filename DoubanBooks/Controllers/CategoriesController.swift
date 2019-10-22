@@ -28,6 +28,7 @@ class CategoriesController: UICollectionViewController {
         } catch {
             categories = [VMCategory]()
         }
+        NotificationCenter.default.addObserver(self, selector: #selector(refresh(noti:)), name: Notification.Name(rawValue: notiCategory), object: nil)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -36,7 +37,26 @@ class CategoriesController: UICollectionViewController {
 
         // Do any additional setup after loading the view.
     }
-
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    @objc func refresh(noti: Notification) {
+        //刷新
+        let name = noti.userInfo!["name"] as! String
+        do {
+            categories?.removeAll()
+            categories?.append(contentsOf: try factory.getAllCategories())
+            UIAlertController.showAlertAndDismiss("\(name)添加成功", in: self, completion: {
+                self.navigationController?.popViewController(animated: true)
+                self.collectionView.reloadData()
+            })
+        } catch DataError.readCollectionError(let info) {
+            categories = [VMCategory]()
+            UIAlertController.showAlertAndDismiss(info, in: self)
+        } catch {
+            categories = [VMCategory]()
+        }
+    }
     /*
     // MARK: - Navigation
 
@@ -63,13 +83,15 @@ class CategoriesController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! CategoriesViewCell
         let category = categories![indexPath.item]
+        // TODO: 类别名称
         cell.lblName.text = category.name!
+        // TODO: 类别次数
         cell.lblCount.text = String(factory.getBooksCountOf(category: category.id)!)
-        // TODO: 图库文件保存到沙盒，取文件地址 cell.imgCover.image = UIImage(contentsOfFile: <#T##String#>)
-        // TODO: plist读写数据 cell.lblEditTime.text =
+        // TODO: 图库文件保存到沙盒，取文件地址
+        cell.imgCover.image = UIImage(contentsOfFile: NSHomeDirectory().appending(imgDir).appending(category.image!))
+        // TODO: plist读写数据
+        cell.lblEditTime.text = CategoryFactory.getEditTimeFeomPlist(id: category.id)
         cell.btnDel.isHidden = true // TODO: 随普通模式和删除模式切换可见
-        // Configure the cell
-    
         return cell
     }
 

@@ -9,6 +9,7 @@
 import UIKit
 
 let imgDir = "/Documents/"
+let notiCategory = "AddCategoriesController.notiCategory"
 class AddCategoriesController: UIViewController,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var imgCover: UIImageView!
     @IBOutlet weak var lblName: UITextField!
@@ -40,8 +41,9 @@ class AddCategoriesController: UIViewController,UIImagePickerControllerDelegate,
         }
         saveImage(image: selectedImage!, fileName: category.image!)
         // TODO: 2.添加类别编辑时间plist
+        CategoryFactory.updateEditTime(id: category.id)
         // TODO: 3.使用Notification通知列表更新
-        
+        NotificationCenter.default.post(name: Notification.Name(rawValue: notiCategory), object: nil, userInfo: ["name": category.name!])
     }
     @IBAction func pickFromPhotoLibrary(_ sender: Any) {
         let imgController = UIImagePickerController()
