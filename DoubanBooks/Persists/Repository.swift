@@ -152,7 +152,9 @@ class Repository<T: DataViewModelDelegate> where T:NSObject {
         fetch.predicate = NSPredicate(format: "id = %@", id.uuidString)
         do {
             let result = try context.fetch(fetch)
-            context.delete(result as! NSManagedObject)
+            for m in result{
+            context.delete(m as! NSManagedObject)
+            }
             app.saveContext()
         } catch {
             throw DataError.deleteEntityError("删除图书数据失败")

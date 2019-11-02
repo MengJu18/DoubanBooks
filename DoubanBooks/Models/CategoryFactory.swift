@@ -62,7 +62,7 @@ final class CategoryFactory {
         return try repository.getBy([VMCategory.colName], keyword: keyword)
     }
     //删除类别
-    func removeCategory(category: VMCategory) throws -> (Bool,String?) {
+    func removeCategory(category: VMCategory) -> (Bool,String?) {
         if let count = getBooksCountOf(category: category.id){
             if count > 0 {
                 return (false,"存在该类别图书，不能删除")

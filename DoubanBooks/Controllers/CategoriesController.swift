@@ -10,10 +10,36 @@ import UIKit
 
 private let reuseIdentifier = "categoryCell"
 
-class CategoriesController: UICollectionViewController {
+class CategoriesController: UICollectionViewController ,EmptyViewDelegate{
+    var isEmpty: Bool{
+        get{
+            if let data = categories {
+                return data.count == 0
+                
+            }
+            return true
+        }
+    }
+     var imgEmpty:UIImageView?
+    func createEmptyView() -> UIView? {
+        if let empty = imgEmpty {
+            return empty
+        }
+        let w = UIScreen.main.bounds.width
+        let h = UIScreen.main.bounds.height
+        let barHeight = navigationController?.navigationBar.frame.height
+        let  img = UIImageView(frame: CGRect(x: (w-139)/2, y: (h-128)/2-(barHeight ?? 0), width: 139, height: 128))
+        img.image = UIImage(named:"no_data")
+        img.contentMode = .scaleAspectFit
+        self.imgEmpty = img
+        return img
+        
+    }
+    
 
     var categories: [VMCategory]?
     let factory = CategoryFactory.getInstance(UIApplication.shared.delegate as! AppDelegate)
+    let BooksSegue = "booksSegue"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +55,12 @@ class CategoriesController: UICollectionViewController {
             categories = [VMCategory]()
         }
         NotificationCenter.default.addObserver(self, selector: #selector(refresh(noti:)), name: Notification.Name(rawValue: notiCategory), object: nil)
+        let lpTap = UILongPressGestureRecognizer(target: self, action: #selector(longPressSwitch(_:)))
+        collectionView.addGestureRecognizer(lpTap)
+        let  tap = UITapGestureRecognizer(target: self, action:#selector(tapToStopShakingOrBooksSegue(_:)))
+        collectionView.addGestureRecognizer(tap)
+        collectionView.setEmtpyCollectionViewDelegate(target: self)
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -39,6 +71,60 @@ class CategoriesController: UICollectionViewController {
     }
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+    var longPressed = false{
+        didSet{
+            if oldValue != longPressed{
+                collectionView.reloadData()
+            }
+        }
+    }
+    var point: CGPoint?
+    //长按
+    
+    @objc func longPressSwitch(_ lpTap:UILongPressGestureRecognizer){
+        //如果长按（在item上）就进入删除模式
+        //判断点是否在item上
+        point = lpTap.location(in: collectionView)
+        
+        if let p = point, let _ = collectionView.indexPathForItem(at: p){
+            longPressed = true
+        }
+    }
+    @objc func tapToStopShakingOrBooksSegue( _ tap:UITapGestureRecognizer){
+        //1.如果删除模式，停止删除模式
+        //2.点击item的时候执行Books场景过渡
+        point = tap.location(in: collectionView)
+        if let p = point,collectionView.indexPathForItem(at: p) == nil {
+            longPressed = false
+        }
+        if let p = point,let index = collectionView .indexPathForItem(at: p){
+            if !longPressed{
+                performSegue(withIdentifier: BooksSegue, sender: index.item)
+            }
+        }
+    }
+    @objc func deleteCategory(){
+        UIAlertController.showConfirm("是否删除", in: self, confirm: {_ in
+            let index = self.collectionView.indexPathForItem(at: self.point!)
+            let category = self.categories![index!.item]
+//            let (sueeccrr, error) =  self.factory.removeCategory(category: category)
+            self.factory.removeCategory(category: category)
+//            if !sueeccrr{
+//                UIAlertController.showAlertAndDismiss(error!, in: self)
+//            } else {
+                self.categories?.remove(at: index!.item)
+//            }
+            let fileManager = FileManager.default
+            do{
+                try fileManager.removeItem(atPath: NSHomeDirectory().appending(imgDir).appending(category.image!))
+            }catch{
+                UIAlertController.showAlertAndDismiss("删除失败", in: self)
+            }
+            self.longPressed = false
+            self.collectionView.reloadData()
+        })
+        
     }
     @objc func refresh(noti: Notification) {
         //刷新
@@ -57,15 +143,19 @@ class CategoriesController: UICollectionViewController {
             categories = [VMCategory]()
         }
     }
-    /*
+ 
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+        if segue.identifier == BooksSegue {
+            let destinatons = segue.destination as! BooksController
+            if sender is Int {
+                let categories = self.categories![sender as! Int]
+                destinatons.category = categories
+            }
     }
-    */
+    }
 
     // MARK: UICollectionViewDataSource
 
@@ -91,8 +181,51 @@ class CategoriesController: UICollectionViewController {
         cell.imgCover.image = UIImage(contentsOfFile: NSHomeDirectory().appending(imgDir).appending(category.image!))
         // TODO: plist读写数据
         cell.lblEditTime.text = CategoryFactory.getEditTimeFeomPlist(id: category.id)
-        cell.btnDel.isHidden = true // TODO: 随普通模式和删除模式切换可见
+        
+        
+     
+        
+        if longPressed {
+            let pos = collectionView.indexPathForItem(at: point!)?.item
+            if pos == indexPath.item{
+                cell.btnDel.isHidden = false
+                let anim = CABasicAnimation(keyPath: "transform.rotation")
+                anim.toValue = -Double.pi / 32
+                 anim.fromValue = Double.pi / 32
+                anim.duration = 0.2
+                anim.repeatCount = MAXFLOAT
+                anim.autoreverses = true
+                cell.layer.add(anim, forKey: "SpringboardShake")
+            }
+            //TODO 删除模式下抖动，非删除模式下取消抖动
+            cell.btnDel.addTarget(self, action: #selector(deleteCategory), for: .touchUpInside)
+        }else{
+            
+            cell.btnDel.isHidden = true
+            cell.layer.removeAllAnimations()
+        }
+        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(getoFindTab(_:)))
+        cell.imgInfo.tag = indexPath.item
+        cell.imgInfo.addGestureRecognizer(tapRecognizer)
+        cell.imgInfo.isUserInteractionEnabled = true
+        //cell.imgDown添加手势识别，传递正确的类别（indexPath.item）把索引用tap,tag
+        
         return cell
+    }
+    
+    
+    @objc func getoFindTab(_ tap: UITapGestureRecognizer){
+        if let index = tap.view?.tag {
+            let findController = tabBarController?.viewControllers![1] as! FindController
+            findController.category = categories![index]
+            findController.kw = categories![index].name!
+            findController.loadBooks(kw: categories![index].name!)
+            tabBarController?.selectedIndex = 1
+            tabBarController?.selectedViewController?.tabBarItem.badgeValue = categories![index].name
+        }
+        
+        
     }
 
     // MARK: UICollectionViewDelegate
