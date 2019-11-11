@@ -7,7 +7,8 @@
 //
 
 import UIKit
-
+import AlamofireImage
+import Alamofire
 private let reuseIdentifier = "categoryCell"
 
 class CategoriesController: UICollectionViewController ,EmptyViewDelegate{
@@ -40,6 +41,8 @@ class CategoriesController: UICollectionViewController ,EmptyViewDelegate{
     var categories: [VMCategory]?
     let factory = CategoryFactory.getInstance(UIApplication.shared.delegate as! AppDelegate)
     let BooksSegue = "booksSegue"
+    let addCategorysegu = "addCategorysegu"
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +57,8 @@ class CategoriesController: UICollectionViewController ,EmptyViewDelegate{
         } catch {
             categories = [VMCategory]()
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(refresh(noti:)), name: Notification.Name(rawValue: notiCategory), object: nil)
+         NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: Notification.Name(rawValue: notiCategory), object: nil)
+         NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name(rawValue: navigations), object: nil)
         let lpTap = UILongPressGestureRecognizer(target: self, action: #selector(longPressSwitch(_:)))
         collectionView.addGestureRecognizer(lpTap)
         let  tap = UITapGestureRecognizer(target: self, action:#selector(tapToStopShakingOrBooksSegue(_:)))
@@ -69,6 +73,10 @@ class CategoriesController: UICollectionViewController ,EmptyViewDelegate{
 
         // Do any additional setup after loading the view.
     }
+    @objc func reload(){
+        collectionView.reloadData()
+    }
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }

@@ -44,6 +44,8 @@ class AddCategoriesController: UIViewController,UIImagePickerControllerDelegate,
         CategoryFactory.updateEditTime(id: category.id)
         // TODO: 3.使用Notification通知列表更新
         NotificationCenter.default.post(name: Notification.Name(rawValue: notiCategory), object: nil, userInfo: ["name": category.name!])
+        NotificationCenter.default.post(name: Notification.Name(rawValue: navigations), object: nil, userInfo: ["name": category.name!])
+        
     }
     @IBAction func pickFromPhotoLibrary(_ sender: Any) {
         let imgController = UIImagePickerController()

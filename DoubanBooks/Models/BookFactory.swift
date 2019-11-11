@@ -7,6 +7,8 @@
 //
 import CoreData
 import Foundation
+let navigations = "BookFactory.navigation"
+
 //懒汉式模式
 final class BookFactory {
     var repository: Repository<VMBook>
@@ -42,6 +44,7 @@ final class BookFactory {
                 return (false, "图书已存在")
             }
             repository.insert(vm: book)
+            NotificationCenter.default.post(name:NSNotification.Name(navigations), object: nil)
             return (true, nil)
         } catch DataError.entityExistsError(let info) {
             return (false, info)
@@ -83,10 +86,29 @@ final class BookFactory {
         return books
     }
     //删除书籍
-    func removeBook(id: UUID) throws -> (Bool,String?) {
+    func removeBook(book: VMBook) throws -> (Bool,String?) {
         do {
-            try repository.delete(id: id)
-            return (true, nil)
+            if let isbn13 = book.isbn13{
+                let book = try repository.getBy([VMBook.colIsBn13],keyword: isbn13)
+                if book.count>0{
+                    try repository.delete(id: book[0].id)
+                    CategoryFactory.updateEditTime(id: book[0].categoryId!)
+                    NotificationCenter.default.post(name:NSNotification.Name(navigations), object: nil)
+                    return(true,nil)
+                }
+                 return(false,"没有找到本地数据，是否已删除？")
+        } else  if let isbn10 = book.isbn10{
+                let book = try repository.getBy([VMBook.colIsBn10],keyword: isbn10)
+                if book.count>0{
+                    try repository.delete(id: book[0].id)
+                    CategoryFactory.updateEditTime(id: book[0].categoryId!)
+                    NotificationCenter.default.post(name:NSNotification.Name(navigations), object: nil)
+
+                    return(true,nil)
+                }
+             return(false,"没有找到本地数据，是否已删除？")
+            }
+            return (false,"请求删除的数据不完整")
         } catch DataError.deleteEntityError(let info) {
             return (false, info)
         } catch {

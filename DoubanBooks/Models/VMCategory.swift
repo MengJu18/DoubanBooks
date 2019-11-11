@@ -8,7 +8,19 @@
 import CoreData
 import Foundation
 
-class VMCategory: NSObject,DataViewModelDelegate{
+class VMCategory: NSObject,DataViewModelDelegate,PickerModelDelegate{
+    var title: String {
+        get{
+
+        return name ?? ""
+
+        }}
+    var value:Any {
+        get{
+            return id.uuidString
+        }
+    }
+    
     var id: UUID
     var name: String?
     var image: String?

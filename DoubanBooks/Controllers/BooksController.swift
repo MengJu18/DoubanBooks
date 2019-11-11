@@ -7,8 +7,14 @@
 //
 
 import UIKit
-
+import Alamofire
+import AlamofireImage
 class BooksController: UITableViewController,EmptyViewDelegate {
+    let bookSuge = "bookSuge"
+    let bookcell = "cell"
+    var category = VMCategory()
+    var books: [VMBook]?
+    let factory = BookFactory.getInstance(UIApplication.shared.delegate as! AppDelegate)
     var isEmpty:Bool{
         get{
             if let data = books {
@@ -33,14 +39,6 @@ class BooksController: UITableViewController,EmptyViewDelegate {
         return img
        
     }
-    
-    var category = VMCategory()
-    var books: [VMBook]?
-    let factory = BookFactory.getInstance(UIApplication.shared.delegate as! AppDelegate)
-    
-    
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
         do{
@@ -57,8 +55,16 @@ class BooksController: UITableViewController,EmptyViewDelegate {
             })
         }
         tableView.setEmtpyTableViewDelegate(target: self)
+        NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name(rawValue: navigations), object: nil)
     }
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    @objc func reload(){
+        tableView.reloadData()
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -70,22 +76,34 @@ class BooksController: UITableViewController,EmptyViewDelegate {
         // #warning Incomplete implementation, return the number of rows
         return books!.count
     }
-
   
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath) as! BookCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: bookcell, for: indexPath) as! BookCell
         let Book = books![indexPath.row]
         cell.lblBookName.text = Book.title
         cell.lblName.text = Book.author
         cell.lblSynopsis.text = Book.summary
-        cell.lblBookImage.image = UIImage(contentsOfFile: NSHomeDirectory().appending(imgDir).appending((category.image!)))
-        
+//        cell.lblBookImage.image = UIImage(contentsOfFile: NSHomeDirectory().appending(imgDir).appending((category.image!)))
+        Alamofire.request(Book.image!).responseImage{ response in
+            if let image = response.result.value {
+                cell.lblBookImage.image = image
+               }
+            }
         return cell
     }
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 130
     }
-
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: bookSuge, sender: indexPath.row)
+    }
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -94,17 +112,19 @@ class BooksController: UITableViewController,EmptyViewDelegate {
     }
     */
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+   
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+            let (success, _) = try! factory.removeBook(book: books![indexPath.row])
+            if !success {
+               UIAlertController.showAlertAndDismiss("删除失败", in: self)
+            }
+            books = try? factory.getBooksOF(category: category.id)
+             UIAlertController.showAlertAndDismiss("删除成功", in: self)
+            tableView.reloadData()
+        } else if editingStyle == .insert {}
+        
     }
-    */
 
     /*
     // Override to support rearranging the table view.
@@ -130,5 +150,19 @@ class BooksController: UITableViewController,EmptyViewDelegate {
         // Pass the selected object to the new view controller.
     }
     */
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == bookSuge {
+            let destinatons = segue.destination as! BookDateController
+            if sender is Int {
+                let book = self.books![sender as! Int]
+                destinatons.book = book
+                destinatons.category = category
+               destinatons.readonly = true
+               
+                
+            }
+        }
+        
+    }
 
 }

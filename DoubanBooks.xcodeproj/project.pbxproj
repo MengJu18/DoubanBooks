@@ -34,12 +34,17 @@
 		BA22021F23614AEE00AE11E7 /* BookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA22021E23614AEE00AE11E7 /* BookCell.swift */; };
 		BA2486E4235D49D900DE5A2C /* QrCodeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2486E3235D49D900DE5A2C /* QrCodeUtils.swift */; };
 		BA2486E6235D4A7E00DE5A2C /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2486E5235D4A7E00DE5A2C /* DateExtensions.swift */; };
+		BA2807EB236FB68C00F6390F /* BookDateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2807EA236FB68C00F6390F /* BookDateController.swift */; };
 		BA297C0A235EF0D00004F418 /* BooksController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA297C09235EF0D00004F418 /* BooksController.swift */; };
 		BA8AF8FE23683F3B001841FE /* JSONable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8AF8FD23683F3B001841FE /* JSONable.swift */; };
 		BA8AF900236840BF001841FE /* JSONConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8AF8FF236840BF001841FE /* JSONConverter.swift */; };
 		BA8D567C236688AC00112451 /* BooksJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8D567B236688AC00112451 /* BooksJson.swift */; };
+		BAA079672376640B00A69C68 /* ActionCollectionPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA079662376640B00A69C68 /* ActionCollectionPicker.swift */; };
+		BAC440F22373A448006BBBB6 /* ActionViewPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC440F12373A448006BBBB6 /* ActionViewPicker.swift */; };
+		BAC440F42373A49D006BBBB6 /* ActionViewPickerDegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAC440F32373A49D006BBBB6 /* ActionViewPickerDegates.swift */; };
 		BACF2B432355CBBA00EDD0D3 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BACF2B422355CBBA00EDD0D3 /* Repository.swift */; };
 		BACF2B452355CC8A00EDD0D3 /* DataViewModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BACF2B442355CC8A00EDD0D3 /* DataViewModelDelegate.swift */; };
+		BADAF5E62376424A004F6AE1 /* ActionTablePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADAF5E52376424A004F6AE1 /* ActionTablePicker.swift */; };
 		BAEAE3CB2353F54900000A29 /* CategoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAEAE3CA2353F54900000A29 /* CategoryFactory.swift */; };
 		BAEAE3CD2354042A00000A29 /* BookRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAEAE3CC2354042A00000A29 /* BookRepository.swift */; };
 		BAEAE3CF23540A7F00000A29 /* BookFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAEAE3CE23540A7F00000A29 /* BookFactory.swift */; };
@@ -95,12 +100,17 @@
 		BA22021E23614AEE00AE11E7 /* BookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCell.swift; sourceTree = "<group>"; };
 		BA2486E3235D49D900DE5A2C /* QrCodeUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QrCodeUtils.swift; sourceTree = "<group>"; };
 		BA2486E5235D4A7E00DE5A2C /* DateExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
+		BA2807EA236FB68C00F6390F /* BookDateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDateController.swift; sourceTree = "<group>"; };
 		BA297C09235EF0D00004F418 /* BooksController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksController.swift; sourceTree = "<group>"; };
 		BA8AF8FD23683F3B001841FE /* JSONable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONable.swift; sourceTree = "<group>"; };
 		BA8AF8FF236840BF001841FE /* JSONConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONConverter.swift; sourceTree = "<group>"; };
 		BA8D567B236688AC00112451 /* BooksJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksJson.swift; sourceTree = "<group>"; };
+		BAA079662376640B00A69C68 /* ActionCollectionPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCollectionPicker.swift; sourceTree = "<group>"; };
+		BAC440F12373A448006BBBB6 /* ActionViewPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionViewPicker.swift; sourceTree = "<group>"; };
+		BAC440F32373A49D006BBBB6 /* ActionViewPickerDegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionViewPickerDegates.swift; sourceTree = "<group>"; };
 		BACF2B422355CBBA00EDD0D3 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		BACF2B442355CC8A00EDD0D3 /* DataViewModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataViewModelDelegate.swift; sourceTree = "<group>"; };
+		BADAF5E52376424A004F6AE1 /* ActionTablePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionTablePicker.swift; sourceTree = "<group>"; };
 		BAEAE3CA2353F54900000A29 /* CategoryFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFactory.swift; sourceTree = "<group>"; };
 		BAEAE3CC2354042A00000A29 /* BookRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookRepository.swift; sourceTree = "<group>"; };
 		BAEAE3CE23540A7F00000A29 /* BookFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookFactory.swift; sourceTree = "<group>"; };
@@ -208,6 +218,7 @@
 				BA09C9BD235A8DEB009C0926 /* AddCategoriesController.swift */,
 				BA297C09235EF0D00004F418 /* BooksController.swift */,
 				BA1E24D423629B2C004A36A0 /* FindController.swift */,
+				BA2807EA236FB68C00F6390F /* BookDateController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -233,6 +244,10 @@
 				BA22021E23614AEE00AE11E7 /* BookCell.swift */,
 				BA20ED4D236A82E5001B0608 /* SearchHeader.swift */,
 				BA20ED4F236A960E001B0608 /* FindViewCell.swift */,
+				BAC440F12373A448006BBBB6 /* ActionViewPicker.swift */,
+				BAC440F32373A49D006BBBB6 /* ActionViewPickerDegates.swift */,
+				BADAF5E52376424A004F6AE1 /* ActionTablePicker.swift */,
+				BAA079662376640B00A69C68 /* ActionCollectionPicker.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -439,16 +454,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				BAEAE3CB2353F54900000A29 /* CategoryFactory.swift in Sources */,
+				BAA079672376640B00A69C68 /* ActionCollectionPicker.swift in Sources */,
 				BA2486E6235D4A7E00DE5A2C /* DateExtensions.swift in Sources */,
 				BA22021F23614AEE00AE11E7 /* BookCell.swift in Sources */,
 				BAEAE3CD2354042A00000A29 /* BookRepository.swift in Sources */,
 				BAEAE3CF23540A7F00000A29 /* BookFactory.swift in Sources */,
 				BA08C6D32351507A00131252 /* DoubanBooks.xcdatamodeld in Sources */,
+				BA2807EB236FB68C00F6390F /* BookDateController.swift in Sources */,
 				BACF2B452355CC8A00EDD0D3 /* DataViewModelDelegate.swift in Sources */,
 				BA08C705235172FA00131252 /* AlertExtensions.swift in Sources */,
 				BA08C6CB2351507900131252 /* AppDelegate.swift in Sources */,
 				BA1E24D523629B2C004A36A0 /* FindController.swift in Sources */,
 				BA08C70223516B8900131252 /* CategoryRepository.swift in Sources */,
+				BAC440F42373A49D006BBBB6 /* ActionViewPickerDegates.swift in Sources */,
+				BADAF5E62376424A004F6AE1 /* ActionTablePicker.swift in Sources */,
 				BA08C6F1235152DF00131252 /* VMBook.swift in Sources */,
 				BA8D567C236688AC00112451 /* BooksJson.swift in Sources */,
 				BA2119E0236975E300106138 /* BookConverter.swift in Sources */,
@@ -462,6 +481,7 @@
 				BA2486E4235D49D900DE5A2C /* QrCodeUtils.swift in Sources */,
 				BA8AF8FE23683F3B001841FE /* JSONable.swift in Sources */,
 				BA8AF900236840BF001841FE /* JSONConverter.swift in Sources */,
+				BAC440F22373A448006BBBB6 /* ActionViewPicker.swift in Sources */,
 				BA22021B236140AA00AE11E7 /* EmptyViewDelegate.swift in Sources */,
 				BA08C6EF2351523000131252 /* VMCategory.swift in Sources */,
 				BACF2B432355CBBA00EDD0D3 /* Repository.swift in Sources */,

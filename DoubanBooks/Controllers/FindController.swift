@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import AlamofireImage
 private let reuseIdentifier = "bookItemCell"
-
+private let booksSgues = "booksSgues"
 class FindController: UICollectionViewController,EmptyViewDelegate,UISearchBarDelegate{
     var category:VMCategory?
     var books:[VMBook]?
@@ -18,13 +18,29 @@ class FindController: UICollectionViewController,EmptyViewDelegate,UISearchBarDe
     var currentPage = 0
     var kw = ""
     var star = ""
+    var point: CGPoint?
    let factory = BookFactory.getInstance(UIApplication.shared.delegate as! AppDelegate)
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.setEmtpyCollectionViewDelegate(target: self)
-       
-        
+        let  tap = UITapGestureRecognizer(target: self, action:#selector(tapToStopShakingOrBooksSegue(_:)))
+        collectionView.addGestureRecognizer(tap)
+        NotificationCenter.default.addObserver(self, selector: #selector(reload), name: Notification.Name(rawValue: navigations), object: nil)
         // Do any additional setup after loading the view.
+    }
+    @objc func reload(){
+        collectionView.reloadData()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == booksSgues {
+            let destinatons = segue.destination as! BookDateController
+            if sender is Int {
+                let book = self.books![sender as! Int]
+                destinatons.book = book
+                destinatons.category = category
+            }
+        }
     }
     var isEmpty: Bool {
         get {
@@ -63,19 +79,20 @@ class FindController: UICollectionViewController,EmptyViewDelegate,UISearchBarDe
         }
         isLoading = false
         currentPage = 0
+        category = nil
         kw = searchBar.text!
         books?.removeAll()
         loadBooks(kw: searchBar.text!)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+    @objc func tapToStopShakingOrBooksSegue( _ tap:UITapGestureRecognizer){
+        //1.如果删除模式，停止删除模式
+        //2.点击item的时候执行Books场景过渡
+        point = tap.location(in: collectionView)
+        if let p = point,let index = collectionView .indexPathForItem(at: p){
+            performSegue(withIdentifier: booksSgues, sender: index.item)
+        }
     }
-    */
+ 
 
     // MARK: UICollectionViewDataSource
 

@@ -79,8 +79,8 @@ class Repository<T: DataViewModelDelegate> where T:NSObject {
         var format = ""
         var args = [String]()
         for col in cols {
-            format += "\(col) like[c] = %@ || "
-            args.append("*\(keyword)*")
+            format += "\(col) = %@ || "
+            args.append(keyword)
         }
         format.removeLast(3)
         let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: T.entityName)

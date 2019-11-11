@@ -66,6 +66,7 @@
                                     <outlet property="imgPicture" destination="Ogi-SP-lHh" id="UJU-C5-0vJ"/>
                                     <outlet property="lblName" destination="JLP-wz-vHZ" id="Bl6-e9-VB9"/>
                                     <outlet property="lblUserName" destination="gkq-OD-78v" id="lr6-aI-TKa"/>
+                                    <segue destination="jij-fd-gx9" kind="show" identifier="booksSgues" id="9ZH-o5-dHQ"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -93,7 +94,155 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q76-fK-EPx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2005.7971014492755" y="-676.33928571428567"/>
+            <point key="canvasLocation" x="1983" y="-710"/>
+        </scene>
+        <!--Book Date Controller-->
+        <scene sceneID="IAz-2Z-90s">
+            <objects>
+                <viewController id="jij-fd-gx9" customClass="BookDateController" customModule="DoubanBooks" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="tf0-Vp-GdK">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m4i-Jz-SsF">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="414" id="Ocx-UN-H1A"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem title="不想告别的夏天" id="uRc-JV-e5y">
+                                        <barButtonItem key="leftBarButtonItem" title="Item" image="ic_star_off" id="bpp-bd-YdG">
+                                            <connections>
+                                                <action selector="collectionAction:" destination="jij-fd-gx9" id="1Vg-ep-PSz"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="完成" id="4gZ-gd-sip">
+                                            <connections>
+                                                <action selector="completeAction:" destination="jij-fd-gx9" id="ged-N7-Aap"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Rr-IV-ydh">
+                                <rect key="frame" x="9" y="100" width="183" height="317"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="317" id="d3s-hv-d78"/>
+                                    <constraint firstAttribute="width" constant="183" id="eIE-9D-geo"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="作者：李冰" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rKS-Hh-t4p">
+                                <rect key="frame" x="200" y="100" width="200" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="Y80-yi-tAz"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="出版日期：2011-5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CjM-hL-owi">
+                                <rect key="frame" x="200" y="160" width="200" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="ron-B9-wVc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="价格：25.0元" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9QB-cS-EGh">
+                                <rect key="frame" x="200" y="186" width="200" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="5sr-yb-aYF"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" lineBreakMode="tailTruncation" numberOfLines="25" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bMb-6Y-PO2">
+                                <rect key="frame" x="0.0" y="445" width="414" height="354"/>
+                                <string key="text">书籍简介：中国第一本“梦的私绘本” 。生命的分岔路口，意想不到的三种奇趣人生：大作家、大侦探和田园小菜农之梦。
+讲述了作者成长过程中点点滴滴的变化，从对文学的热爱到回归田园的梦想，再加上“我想当侦探”的诙谐，三个主题各有倚重，画面精致且富有流动感，让人一读之下便不忍释卷。。
+First Life 我为书狂
+我也有天才梦
+偷读爸爸日记的深夜
+想成为深刻的小说家
+比我更狂热的读书狂
+尝试过了就可以
+Second Life 不想告别的夏天
+慢车开往姥姥家
+开满向日葵的花田
+跟姥姥一起去卖菜
+嗅到清新的泥土味道
+回忆点点滴滴
+Third Life 私人侦探事务所之梦
+我的侦探情结
+难以忘怀的经典
+好侦探内文兼修</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="20" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qka-Xk-7Nh">
+                                <rect key="frame" x="194" y="215" width="220" height="215"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="220" id="IyJ-xg-uEw"/>
+                                </constraints>
+                                <string key="text">李冰：女，著名绘本作家。曾就职于500强企业，2006年开始绘本创作。李冰，作品具有浪漫主义气质，清新甜美，温馨感人，形成自己独特风格。
+新浪、腾讯、起点等多家网站连载，引起网友热捧，其中，在腾讯的作品连载数月流量突破三百万点击，成为腾讯最受欢迎的漫画家之一。此外，《读者原创》、《女友家园》杂志每期开设作品专版。</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="出版社：人民文学出版社" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lLP-nQ-W0E">
+                                <rect key="frame" x="200" y="128" width="191" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="191" id="5nU-OS-Qw9"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="9QB-cS-EGh" firstAttribute="top" secondItem="CjM-hL-owi" secondAttribute="bottom" constant="6" id="1TL-oc-dOZ"/>
+                            <constraint firstItem="qka-Xk-7Nh" firstAttribute="leading" secondItem="3Rr-IV-ydh" secondAttribute="trailing" constant="2" id="217-DI-KzG"/>
+                            <constraint firstItem="bMb-6Y-PO2" firstAttribute="top" secondItem="qka-Xk-7Nh" secondAttribute="bottom" constant="15" id="4vh-m8-fIH"/>
+                            <constraint firstItem="rKS-Hh-t4p" firstAttribute="top" secondItem="m4i-Jz-SsF" secondAttribute="bottom" constant="12" id="EUP-O8-fPX"/>
+                            <constraint firstItem="lLP-nQ-W0E" firstAttribute="leading" secondItem="3Rr-IV-ydh" secondAttribute="trailing" constant="8" id="HAX-w5-flH"/>
+                            <constraint firstItem="CjM-hL-owi" firstAttribute="leading" secondItem="3Rr-IV-ydh" secondAttribute="trailing" constant="8" id="IMV-fI-hBj"/>
+                            <constraint firstItem="bMb-6Y-PO2" firstAttribute="trailing" secondItem="SAh-qe-fKh" secondAttribute="trailing" id="KCz-nI-Muu"/>
+                            <constraint firstItem="3Rr-IV-ydh" firstAttribute="leading" secondItem="SAh-qe-fKh" secondAttribute="leading" constant="9" id="Rgs-29-UBO"/>
+                            <constraint firstItem="m4i-Jz-SsF" firstAttribute="top" secondItem="SAh-qe-fKh" secondAttribute="top" id="WWQ-k6-0Wt"/>
+                            <constraint firstItem="3Rr-IV-ydh" firstAttribute="top" secondItem="m4i-Jz-SsF" secondAttribute="bottom" constant="12" id="cjD-0l-omG"/>
+                            <constraint firstItem="CjM-hL-owi" firstAttribute="top" secondItem="lLP-nQ-W0E" secondAttribute="bottom" constant="12" id="eLU-uS-8ty"/>
+                            <constraint firstItem="SAh-qe-fKh" firstAttribute="bottom" secondItem="bMb-6Y-PO2" secondAttribute="bottom" constant="14" id="fZG-vQ-MDF"/>
+                            <constraint firstItem="bMb-6Y-PO2" firstAttribute="leading" secondItem="SAh-qe-fKh" secondAttribute="leading" id="gXo-ct-ODd"/>
+                            <constraint firstItem="qka-Xk-7Nh" firstAttribute="top" secondItem="9QB-cS-EGh" secondAttribute="bottom" constant="9" id="mLu-Jl-v5o"/>
+                            <constraint firstItem="lLP-nQ-W0E" firstAttribute="top" secondItem="rKS-Hh-t4p" secondAttribute="bottom" constant="8" id="nZj-cc-PiG"/>
+                            <constraint firstItem="m4i-Jz-SsF" firstAttribute="leading" secondItem="SAh-qe-fKh" secondAttribute="leading" id="nqM-lz-WPD"/>
+                            <constraint firstItem="rKS-Hh-t4p" firstAttribute="leading" secondItem="3Rr-IV-ydh" secondAttribute="trailing" constant="8" id="qLA-pz-m4v"/>
+                            <constraint firstItem="m4i-Jz-SsF" firstAttribute="trailing" secondItem="SAh-qe-fKh" secondAttribute="trailing" id="r6O-hC-R6q"/>
+                            <constraint firstItem="9QB-cS-EGh" firstAttribute="leading" secondItem="3Rr-IV-ydh" secondAttribute="trailing" constant="8" id="shp-4k-WhW"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="SAh-qe-fKh"/>
+                    </view>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="ButCollection" destination="bpp-bd-YdG" id="3S1-e3-6f1"/>
+                        <outlet property="angTitle" destination="uRc-JV-e5y" id="UGs-bX-ORY"/>
+                        <outlet property="imgCover" destination="3Rr-IV-ydh" id="q1g-tW-0Zp"/>
+                        <outlet property="lblAuthor" destination="qka-Xk-7Nh" id="570-AU-y4G"/>
+                        <outlet property="lblBrief" destination="bMb-6Y-PO2" id="awc-j2-3Y2"/>
+                        <outlet property="lblPrice" destination="9QB-cS-EGh" id="UjG-OY-Mmd"/>
+                        <outlet property="lblPubdate" destination="CjM-hL-owi" id="Aik-hj-0zn"/>
+                        <outlet property="lblPublisher" destination="lLP-nQ-W0E" id="kpK-Im-rPF"/>
+                        <outlet property="lblUserName" destination="rKS-Hh-t4p" id="66Z-6o-QAK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Gdo-Qc-gCM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5287" y="19"/>
         </scene>
         <!--图书列表-->
         <scene sceneID="zDb-DH-pbm">
@@ -165,7 +314,7 @@
                                     <outlet property="lblCount" destination="SDa-9n-npH" id="8AC-6a-F1R"/>
                                     <outlet property="lblEditTime" destination="SIx-D2-I7J" id="x2n-O0-FFS"/>
                                     <outlet property="lblName" destination="JbH-0l-2ar" id="rMX-Jm-iqP"/>
-                                    <segue destination="ryT-33-z6K" kind="show" identifier="booksSegue" id="Nd2-8z-TfC"/>
+                                    <segue destination="ryT-33-z6K" kind="show" identifier="booksSegue" id="jJQ-3w-hPZ"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -312,10 +461,13 @@
                             <outlet property="delegate" destination="ryT-33-z6K" id="gU8-ae-4DZ"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <segue destination="jij-fd-gx9" kind="showDetail" identifier="bookSuge" id="kdE-Hg-KZG"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zyj-yF-jfc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2008.6956521739132" y="735.9375"/>
+            <point key="canvasLocation" x="4158" y="19"/>
         </scene>
         <!--Add Categories Controller-->
         <scene sceneID="8Jx-pr-URJ">
@@ -385,7 +537,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="3821.739130434783" y="18.75"/>
+            <point key="canvasLocation" x="2919" y="853"/>
         </scene>
         <!--我的图书-->
         <scene sceneID="r7W-s2-G3X">
@@ -431,7 +583,11 @@
         <image name="down" width="48" height="48"/>
         <image name="ic_find" width="32" height="32"/>
         <image name="ic_local" width="32" height="32"/>
+        <image name="ic_star_off" width="32" height="32"/>
         <image name="ic_user" width="32" height="32"/>
         <image name="star_off" width="27" height="27"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="kdE-Hg-KZG"/>
+    </inferredMetricsTieBreakers>
 </document>
